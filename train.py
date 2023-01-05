@@ -68,7 +68,7 @@ def train():
 
     optimizer = optim.Adam(model.classifier.parameters(), lr=args.learning_rate)
 
-    device = torch.device("cuda" if torch.cuda.is_available() and args.gpu else "cpu")
+    device = torch.device("cuda" if torch.cuda.is_available() and args.gpu == 'gpu' else "cpu")
     print('Available device is : ', device)
 
     model.to(device)       

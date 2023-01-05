@@ -106,9 +106,17 @@ def predict():
     # Predict
     image = torch.from_numpy(image).type(torch.FloatTensor)
     image = image.unsqueeze_(0)
-    if args.gpu:
+    # check whether the gpu is available or not and set parameters accordingly
+    device = torch.device("cuda" if torch.cuda.is_available() and args.gpu else "cpu")
+    print(f"Using device: {device}")
+
+    if device == 'cuda':
         image = image.cuda()
         model = model.cuda()
+    else:
+        image = image.cpu()
+        model = model.cpu()
+        
     model.eval()
     with torch.no_grad():
         output = model.forward(image)
